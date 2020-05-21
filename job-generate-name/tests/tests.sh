@@ -44,7 +44,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ $ok -ne 1 ]; then
-    >&2 echo "failed to find all dependencies.  expected kustomize1 and kustomize2 to be in $$PATH"
+    >&2 echo "failed to find all dependencies.  expected kustomize1 and kustomize2 to be in \$PATH"
     exit 1
 fi
 
