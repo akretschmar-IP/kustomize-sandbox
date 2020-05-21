@@ -2,7 +2,7 @@ resources:
 - job.yaml
 
 # patchesJson6902:
-#   - path: job-generate-name.yaml
+#   - path: generate-name.patch.yaml
 #     target:
 #       group: batch
 #       version: v1

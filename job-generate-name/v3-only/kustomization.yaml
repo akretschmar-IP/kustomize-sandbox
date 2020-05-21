@@ -7,6 +7,8 @@ bases:
 # relevant jobs (in theory we could use something other than `name ~= *-`, like a labelSelector or the
 # like) without the root kustomization having to know about each affected instance.  It's essentially
 # a global workaround.
+# As an added bonus, kustomize v3 supports inline patch definitions, i.e. you don't have to reference
+# a separate file
 # ***HOWEVER*** it does not work with kustomize v1, so it would have to wait until after upgrading.
 patches:
     - patch: |-

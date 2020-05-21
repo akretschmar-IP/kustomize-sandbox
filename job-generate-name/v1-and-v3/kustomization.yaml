@@ -7,13 +7,13 @@ bases:
 # underneath it, which is a maintainability risk.
 # ***HOWEVER*** it works for both kustomize v1 and v3, so it lets us bridge the gap between versions
 patchesJson6902:
-    - path: job-generate-name.yaml
+    - path: generate-name.patch.yaml
       target:
         group: batch
         version: v1
         kind: Job
         name: job1-
-    - path: job-generate-name.yaml
+    - path: generate-name.patch.yaml
       target:
         group: batch
         version: v1
