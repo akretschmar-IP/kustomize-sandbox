@@ -1,0 +1,21 @@
+bases:
+- job1
+- job2
+- job3 # has static name
+
+# this method will work, but requires the root kustomization (i.e. this file) to know about all jobs
+# underneath it, which is a maintainability risk.
+# ***HOWEVER*** it works for both kustomize v1 and v3, so it lets us bridge the gap between versions
+patchesJson6902:
+    - path: job-generate-name.yaml
+      target:
+        group: batch
+        version: v1
+        kind: Job
+        name: job1-
+    - path: job-generate-name.yaml
+      target:
+        group: batch
+        version: v1
+        kind: Job
+        name: job2-

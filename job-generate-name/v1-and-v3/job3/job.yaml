@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job3
+spec:
+  template:
+    spec:
+      containers:
+      - name: main
+        image: alpine
+        command: ["echo",  "job3 - static name!!"]
+      restartPolicy: Never
+  backoffLimit: 4

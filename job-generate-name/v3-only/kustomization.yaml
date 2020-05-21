@@ -1,0 +1,20 @@
+bases:
+- job1
+- job2
+- job3 # has static name
+
+# this method, while it breaks encapsulation somewhat, allows a single patch to be applied to all
+# relevant jobs (in theory we could use something other than `name ~= *-`, like a labelSelector or the
+# like) without the root kustomization having to know about each affected instance.  It's essentially
+# a global workaround.
+# ***HOWEVER*** it does not work with kustomize v1, so it would have to wait until after upgrading.
+patches:
+    - patch: |-
+        - op: move
+          from: /metadata/name
+          path: /metadata/generateName
+      target:
+        group: batch
+        version: v1
+        kind: Job
+        name: '*-'

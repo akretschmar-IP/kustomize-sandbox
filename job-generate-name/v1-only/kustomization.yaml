@@ -1,0 +1,4 @@
+bases:
+- job1
+- job2
+- job3 # has static name

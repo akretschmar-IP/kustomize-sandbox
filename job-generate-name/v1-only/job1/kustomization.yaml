@@ -1,0 +1,11 @@
+resources:
+- job.yaml
+
+# this breaks in kustomize3 because the name field gets blanked out, resulting in resource hash collisions
+patchesJson6902:
+  - path: job-generate-name.yaml
+    target:
+      group: batch
+      version: v1
+      kind: Job
+      name: job1-
