@@ -1,0 +1,5 @@
+commonAnnotations:
+  some.annotation.value: "0"
+
+secretGenerator:
+- name: common-annotation-test
