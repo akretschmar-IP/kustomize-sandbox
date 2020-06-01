@@ -1,0 +1,23 @@
+resources:
+  - rbac.yaml
+  - deployment.yaml
+
+secretGenerator:
+- name: env-secrets
+- name: file-secrets
+
+configMapGenerator:
+- name: encrypted-env-secrets
+  files:
+    - 
+
+commonLabels:
+  generated: "true"
+
+vars:
+  - name: ENV_SECRET_NAME
+    objref:
+      kind: Secret
+      name: test-secret
+      apiVersion: v1
+  - name: FILE_SECRET_NAME

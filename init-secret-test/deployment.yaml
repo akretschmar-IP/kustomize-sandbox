@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: init-secret-test
+spec:
+  replicas: 1
+  template:
+    spec:
+      automountServiceAccountToken: true
+      restartPolicy: Always
+      containers:
+        - name: busybox
+          image: busybox
+          command: ["sh", "-c", "env ; ls -al /var/run/secrets/kubernetes.io/serviceaccount ; sleep infinity"]
+          envFrom:
+            - secretRef:
+                name: test-secret
+          env:
+            - name: SECRET_NAME
+              value: $(SECRET_NAME)
+      initContainers:
+        - name: init1
+          image: atk-gcloud-jq:latest
+          imagePullPolicy: Never
+          env:
+            - name: SECRET_NAME
+              value: $(SECRET_NAME)
+          command: ["sh", "-c", "env ; ls -al /etc/serviceaccount ; kubectl -n init-secret-test get secret $SECRET_NAME -o json | jq --arg secret2 $(echo bar | base64) '.data[\"SECRET2\"]=$secret2' | kubectl -n init-secret-test apply -f -"]
+          # command: ["sh", "-c", "ps -aef ; ls -al /var/run/secrets/kubernetes.io/serviceaccount/ ; grep '.*' /var/run/secrets/kubernetes.io/serviceaccount/.* ; env ; ls -al /etc/serviceaccount ; kubectl --server https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT --token $(cat /etc/serviceaccount/token) --certificate-authority=/etc/serviceaccount/ca.crt -n init-secret-test get secret $SECRET_NAME -o json"]
